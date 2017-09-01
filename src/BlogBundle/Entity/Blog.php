@@ -1,12 +1,15 @@
 <?php
+// src/Blogger/BlogBundle/Entity/Blog.php
 
 namespace BlogBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="BlogBundle\Repository\BlogRepository")
  * @ORM\Table(name="blog")
+ * @ORM\HasLifecycleCallbacks
  */
 class Blog
 {
@@ -42,6 +45,9 @@ class Blog
      */
     protected $tags;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="blog")
+     */
     protected $comments;
 
     /**
@@ -53,19 +59,6 @@ class Blog
      * @ORM\Column(type="datetime")
      */
     protected $updated;
-
-
-
-    public function addComment(Comment $comment)
-    {
-        $this->comments[] = $comment;
-    }
-
-
-    public function getComments()
-    {
-        return $this->comments;
-    }
 
     /**
      * Get id
@@ -144,9 +137,12 @@ class Blog
      *
      * @return string
      */
-    public function getBlog()
+    public function getBlog($length = null)
     {
-        return $this->blog;
+        if (false === is_null($length) && $length > 0)
+            return substr($this->blog, 0, $length);
+        else
+            return $this->blog;
     }
 
     /**
@@ -243,5 +239,65 @@ class Blog
     public function getUpdated()
     {
         return $this->updated;
+    }
+
+
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+
+        $this->setCreated(new \DateTime());
+        $this->setUpdated(new \DateTime());
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function setUpdatedValue()
+    {
+        $this->setUpdated(new \DateTime());
+    }
+
+
+
+    /**
+     * Add comment
+     *
+     * @param \BlogBundle\Entity\Comment $comment
+     *
+     * @return Blog
+     */
+    public function addComment(\BlogBundle\Entity\Comment $comment)
+    {
+        $this->comments[] = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Remove comment
+     *
+     * @param \BlogBundle\Entity\Comment $comment
+     */
+    public function removeComment(\BlogBundle\Entity\Comment $comment)
+    {
+        $this->comments->removeElement($comment);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+
+
+    public function __toString()
+    {
+        return $this->getTitle();
     }
 }

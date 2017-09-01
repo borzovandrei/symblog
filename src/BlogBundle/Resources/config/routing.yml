@@ -16,9 +16,16 @@ blog_contact:
     requirements:
         methods:  GET|POST
 
-BloggerBlogBundle_blog_show:
+blog_show:
     path:  /{id}
     defaults: { _controller: BlogBundle:Blog:show }
     requirements:
         methods:  GET
         id: \d+
+
+comment_create:
+    path:  /comment/{blog_id}
+    defaults: { _controller: BlogBundle:Comment:create }
+    requirements:
+        methods:  POST
+        blog_id: \d+

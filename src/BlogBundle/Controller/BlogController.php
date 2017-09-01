@@ -1,5 +1,4 @@
 <?php
-// src/Blogger/BlogBundle/Controller/BlogController.php
 
 namespace BlogBundle\Controller;
 
@@ -11,20 +10,25 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class BlogController extends Controller
 {
     /**
-     * Show a blog entry
+     * Show a blog entryz
      */
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $blog = $em->getRepository('BloggerBlogBundle:Blog')->find($id);
+        $blog = $em->getRepository('BlogBundle:Blog')->find($id);
 
         if (!$blog) {
-            throw $this->createNotFoundException('Unable to find Blog post.');
+            throw $this->createNotFoundException('Не удалось найти пост.');
         }
+
+        $comments = $em->getRepository('BlogBundle:Comment')
+            ->getCommentsForBlog($blog->getId());
 
         return $this->render('BlogBundle:Blog:show.html.twig', array(
             'blog' => $blog,
+
+            'comments'  => $comments
         ));
     }
 }
