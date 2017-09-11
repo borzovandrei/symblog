@@ -1,3 +1,4 @@
 parameters:
     # Blogger contact email address
     blogger_blog.emails.contact_email: borzovandrei45@gmail.com
+    blog.comments.latest_comment_limit: 5
