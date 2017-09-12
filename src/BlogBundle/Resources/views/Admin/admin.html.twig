@@ -1,7 +1,6 @@
-{% extends 'BlogBundle::layout.html.twig' %}
+{% extends 'BlogBundle::admin_layout.html.twig' %}
 
 {% block body %}
-    <div class="blog-view">
     {% for blog in blogs %}
         <article class="blog">
             <div class="date"><time datetime="{{ blog.created|date('c') }}">{{ blog.created|date('l, F j, Y') }}</time></div>
@@ -12,7 +11,7 @@
             <img src="{{ asset(['images/', blog.image]|join) }}" />
             <div class="snippet">
                 <p>{{ blog.blog(500) }}</p>
-                <p class="continue"><a href="{{ path('blog_show', { 'id': blog.id }) }}">Continue reading...</a></p>
+                <p class="continue"><a href="{{ path('admin_blog_edit', { 'id': blog.id }) }}">Читать подробнее (Изменить).</a></p>
             </div>
 
             <footer class="meta">
@@ -24,8 +23,4 @@
     {% else %}
         <p>There are no blog entries for symblog</p>
     {% endfor %}
-    </div>
-
-   {{ include('BlogBundle:Page:pagination.html.twig',{'pagination' : pagination}) }}
-
 {% endblock %}

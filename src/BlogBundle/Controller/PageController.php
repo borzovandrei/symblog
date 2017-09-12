@@ -4,23 +4,39 @@ namespace BlogBundle\Controller;
 
 use BlogBundle\Entity\Enquiry;
 use BlogBundle\Form\EnquiryType;
+use BlogBundle\Repository\BlogRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 class PageController extends Controller
 {
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()
-            ->getManager();
 
-        $blogs = $em->getRepository('BlogBundle:Blog')
-            ->getLatestBlogs();
+
+
+
+    public function indexAction(Request $request)
+    {
+        $em = $this->getDoctrine();
+        $totalblog = $em->getRepository('BlogBundle:Blog')->findAllBlogCount();
+        $page = $request->query->get("page") && $request->query->get("page") > 1 ? $request->query->get("page") : 1;
+        $blogs = $em->getRepository('BlogBundle:Blog')->getLatestBlogs(["page"=>$page]);
+        $pagination=[
+            "total"=>array_shift($totalblog),
+            "page"=>$page,
+            "max_result"=>2,
+            "url"=>"blog_homepage"
+        ];
 
         return $this->render('BlogBundle:Page:index.html.twig', array(
-            'blogs' => $blogs
+            'blogs' => $blogs,
+            'pagination'=>$pagination ,
         ));
     }
+
+
+
+
+
 
     public function aboutAction()
     {

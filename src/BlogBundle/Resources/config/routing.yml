@@ -29,3 +29,19 @@ comment_create:
     requirements:
         methods:  POST
         blog_id: \d+
+
+
+
+admin_page:
+    path: /admin
+    defaults: { _controller: BlogBundle:Admin:index }
+
+admin_blog:
+    path: /admin/blog/
+    defaults: { _controller: BlogBundle:Admin:blog }
+
+admin_blog_edit:
+    path: /admin/blog/{id}/edit
+    defaults: { _controller: BlogBundle:Admin:blogEdit}
+    requirements:
+            id: \d+

@@ -1,0 +1,12 @@
+{% extends 'BlogBundle:Default:index.html.twig' %}
+
+
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/blog.css') }}" type="text/css" rel="stylesheet" />
+{% endblock %}
+
+{% block sidebar %}
+    <h3>ВНИМАНИЕ! ВЫ ЗАШЛИ ПОД АДМИНИСТАРТОРОМ!</h3>
+{% endblock %}

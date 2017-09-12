@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class BlogController extends Controller
 {
     /**
-     * Show a blog entryz
+     * Show a blog entry
      */
     public function showAction($id)
     {
