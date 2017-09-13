@@ -34,7 +34,10 @@ class PageController extends Controller
     }
 
 
-
+    public function loginAction()
+    {
+        return $this->render('BlogBundle:Page:login.html.twig');
+    }
 
 
 

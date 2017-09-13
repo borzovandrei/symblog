@@ -23,4 +23,5 @@
     {% else %}
         <p>There are no blog entries for symblog</p>
     {% endfor %}
+    {{ include('BlogBundle:Page:pagination.html.twig',{'pagination' : pagination}) }}
 {% endblock %}

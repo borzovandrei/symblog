@@ -16,6 +16,12 @@ blog_contact:
     requirements:
         methods:  GET|POST
 
+blog_login:
+    path:   /login
+    defaults: { _controller: BlogBundle:Page:login }
+    requirements:
+         methods:  GET
+
 blog_show:
     path:  /{id}
     defaults: { _controller: BlogBundle:Blog:show }
@@ -45,3 +51,7 @@ admin_blog_edit:
     defaults: { _controller: BlogBundle:Admin:blogEdit}
     requirements:
             id: \d+
+
+admin_blog_add:
+    path: /admin/blog/add
+    defaults: { _controller: BlogBundle:Admin:blogAdd}
