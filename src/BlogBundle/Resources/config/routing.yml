@@ -55,3 +55,19 @@ admin_blog_edit:
 admin_blog_add:
     path: /admin/blog/add
     defaults: { _controller: BlogBundle:Admin:blogAdd}
+
+
+
+_security_login:
+    path:  /login
+    defaults: { _controller: BlogBundle:Page:login }
+
+_security_check:
+    path:  /login_check
+
+_security_logout:
+    path:  /logout
+
+admin_home:
+    path:  /admin
+    defaults: { _controller: BlogBundle:Admin:index }

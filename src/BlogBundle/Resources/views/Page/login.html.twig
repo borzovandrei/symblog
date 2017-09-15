@@ -9,4 +9,49 @@
 
 
 
+
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <li>
+            <h3>
+                Добро пожаловать на администраторскую страницу, {{ app.user.username }}!
+            </h3>
+        </li>
+    {% else %}
+
+
+        {% if error %}
+            <h2><div class="error">{{ error.message }}</div></h2>
+        {% endif %}
+
+        <form action="{{ path('_security_check') }}" method="POST">
+            <table>
+                <tr>
+                    <td>
+                        <label for="username">Логин:</label>
+                    </td>
+                    <td>
+                        <input type="text" id="username" name="_username" value="{{ last_username }}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="password">Пароль:</label>
+                    </td>
+                    <td>
+                        <input type="password" id="password" name="_password" />
+                    </td>
+                </tr>
+            </table>
+            <input type="submit" name="login" value="Отправить" />
+        </form>
+
+
+
+    {% endif %}
+
+
+
+
+
+
 {% endblock %}

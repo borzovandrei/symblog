@@ -4,9 +4,9 @@ namespace BlogBundle\Controller;
 
 use BlogBundle\Entity\Enquiry;
 use BlogBundle\Form\EnquiryType;
-use BlogBundle\Repository\BlogRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 
 class PageController extends Controller
 {
@@ -34,9 +34,18 @@ class PageController extends Controller
     }
 
 
-    public function loginAction()
+    public function loginAction(Request $request)
     {
-        return $this->render('BlogBundle:Page:login.html.twig');
+        $session = $request->getSession();
+        if ($request->attributes->has(Security::AUTHENTICATION_ERROR)) {
+            $error = $request->attributes->get(Security::AUTHENTICATION_ERROR);
+        } else {
+            $error = $request->getSession()->get(Security::AUTHENTICATION_ERROR);
+        }
+        return $this->render('BlogBundle:Page:login.html.twig', array(
+            'last_username' =>$request->getSession()->get(Security::LAST_USERNAME),
+            'error' => $error
+        ));
     }
 
 

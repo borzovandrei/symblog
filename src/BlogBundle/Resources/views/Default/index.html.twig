@@ -25,7 +25,15 @@
                         <li><a href="{{ path('homepage') }}">Home</a></li>
                         <li><a href="{{ path('blog_about') }}">About</a></li>
                         <li><a href="{{ path('blog_contact') }}">Contact</a></li>
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                            <li>
+                                <a href="{{ path('_security_logout') }}">
+                                    Выход
+                                </a>
+                            </li>
+                        {% else %}
                         <li><a href="{{ path('blog_login') }}">Регистрация</a></li>
+                        {% endif %}
                     </ul>
                 </nav>
             {% endblock %}
